@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="section27ModelStoreContainer" CdmEntityContainer="section27Entities">
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="section27Model.Course">
+        <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="course_code" ColumnName="course_code" />
+          <ScalarProperty Name="course_name" ColumnName="course_name" />
+          <ScalarProperty Name="prereq" ColumnName="prereq" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Instructors">
+      <EntityTypeMapping TypeName="section27Model.Instructor">
+        <MappingFragment StoreEntitySet="Instructor">
+          <ScalarProperty Name="instructor_id" ColumnName="instructor_id" />
+          <ScalarProperty Name="instructor_name" ColumnName="instructor_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="address" ColumnName="address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Programs">
+      <EntityTypeMapping TypeName="section27Model.Program">
+        <MappingFragment StoreEntitySet="Program">
+          <ScalarProperty Name="program_id" ColumnName="program_id" />
+          <ScalarProperty Name="program_name" ColumnName="program_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sections">
+      <EntityTypeMapping TypeName="section27Model.Section">
+        <MappingFragment StoreEntitySet="Section">
+          <ScalarProperty Name="offering_code" ColumnName="offering_code" />
+          <ScalarProperty Name="course_code" ColumnName="course_code" />
+          <ScalarProperty Name="semester" ColumnName="semester" />
+          <ScalarProperty Name="instructor_id" ColumnName="instructor_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="section27Model.Student">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="student_id" ColumnName="student_id" />
+          <ScalarProperty Name="student_name" ColumnName="student_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone_number_home" ColumnName="phone_number_home" />
+          <ScalarProperty Name="phone_number_cell" ColumnName="phone_number_cell" />
+          <ScalarProperty Name="program_id" ColumnName="program_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentSections">
+      <EntityTypeMapping TypeName="section27Model.StudentSection">
+        <MappingFragment StoreEntitySet="StudentSection">
+          <ScalarProperty Name="grade" ColumnName="grade" />
+          <ScalarProperty Name="registry_id" ColumnName="registry_id" />
+          <ScalarProperty Name="student_id" ColumnName="student_id" />
+          <ScalarProperty Name="offering_code" ColumnName="offering_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

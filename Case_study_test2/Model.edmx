@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="section27Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="course_code" />
+          </Key>
+          <Property Name="course_code" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="course_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="prereq" Type="varchar" MaxLength="24" />
+        </EntityType>
+        <EntityType Name="Instructor">
+          <Key>
+            <PropertyRef Name="instructor_id" />
+          </Key>
+          <Property Name="instructor_id" Type="int" Nullable="false" />
+          <Property Name="instructor_name" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="319" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="24" />
+          <Property Name="address" Type="varchar" MaxLength="319" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="program_id" />
+          </Key>
+          <Property Name="program_id" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="program_name" Type="varchar" MaxLength="319" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="offering_code" />
+          </Key>
+          <Property Name="offering_code" Type="int" Nullable="false" />
+          <Property Name="course_code" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="semester" Type="varchar" MaxLength="24" />
+          <Property Name="instructor_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="student_name" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="319" Nullable="false" />
+          <Property Name="phone_number_home" Type="varchar" MaxLength="24" />
+          <Property Name="phone_number_cell" Type="varchar" MaxLength="24" />
+          <Property Name="program_id" Type="varchar" MaxLength="24" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentSection">
+          <Key>
+            <PropertyRef Name="registry_id" />
+          </Key>
+          <Property Name="registry_id" Type="int" Nullable="false" />
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="offering_code" Type="int" Nullable="false" />
+          <Property Name="grade" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <Association Name="FK_COURSE_CODE">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="course_code" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="course_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PR_STDPR">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="StudentSection" Type="Self.StudentSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="offering_code" />
+            </Principal>
+            <Dependent Role="StudentSection">
+              <PropertyRef Name="offering_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROF_ID">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="instructor_id" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="instructor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STD_STDPR">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentSection" Type="Self.StudentSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="StudentSection">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STUD_PR">
+          <End Role="Program" Type="Self.Program" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program">
+              <PropertyRef Name="program_id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="section27ModelStoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="S27_yuanhee" store:Type="Tables" />
+          <EntitySet Name="Instructor" EntityType="Self.Instructor" Schema="S27_yuanhee" store:Type="Tables" />
+          <EntitySet Name="Program" EntityType="Self.Program" Schema="S27_yuanhee" store:Type="Tables" />
+          <EntitySet Name="Section" EntityType="Self.Section" Schema="S27_yuanhee" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="S27_yuanhee" store:Type="Tables" />
+          <EntitySet Name="StudentSection" EntityType="Self.StudentSection" Schema="S27_yuanhee" store:Type="Tables" />
+          <AssociationSet Name="FK_COURSE_CODE" Association="Self.FK_COURSE_CODE">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Section" EntitySet="Section" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PR_STDPR" Association="Self.FK_PR_STDPR">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="StudentSection" EntitySet="StudentSection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROF_ID" Association="Self.FK_PROF_ID">
+            <End Role="Instructor" EntitySet="Instructor" />
+            <End Role="Section" EntitySet="Section" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STD_STDPR" Association="Self.FK_STD_STDPR">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentSection" EntitySet="StudentSection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STUD_PR" Association="Self.FK_STUD_PR">
+            <End Role="Program" EntitySet="Program" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="section27Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="course_code" />
+          </Key>
+          <Property Name="course_code" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="course_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prereq" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sections" Relationship="Self.FK_COURSE_CODE" FromRole="Course" ToRole="Section" />
+        </EntityType>
+        <EntityType Name="Instructor">
+          <Key>
+            <PropertyRef Name="instructor_id" />
+          </Key>
+          <Property Name="instructor_id" Type="Int32" Nullable="false" />
+          <Property Name="instructor_name" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="319" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="319" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Sections" Relationship="Self.FK_PROF_ID" FromRole="Instructor" ToRole="Section" />
+        </EntityType>
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="program_id" />
+          </Key>
+          <Property Name="program_id" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="program_name" Type="String" MaxLength="319" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Students" Relationship="Self.FK_STUD_PR" FromRole="Program" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="offering_code" />
+          </Key>
+          <Property Name="offering_code" Type="Int32" Nullable="false" />
+          <Property Name="course_code" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="semester" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="instructor_id" Type="Int32" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_COURSE_CODE" FromRole="Section" ToRole="Course" />
+          <NavigationProperty Name="Instructor" Relationship="Self.FK_PROF_ID" FromRole="Section" ToRole="Instructor" />
+          <NavigationProperty Name="StudentSections" Relationship="Self.FK_PR_STDPR" FromRole="Section" ToRole="StudentSection" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="student_name" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="319" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone_number_home" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number_cell" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="program_id" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Program" Relationship="Self.FK_STUD_PR" FromRole="Student" ToRole="Program" />
+          <NavigationProperty Name="StudentSections" Relationship="Self.FK_STD_STDPR" FromRole="Student" ToRole="StudentSection" />
+        </EntityType>
+        <EntityType Name="StudentSection">
+          <Key>
+            <PropertyRef Name="registry_id" />
+          </Key>
+          <Property Name="registry_id" Type="Int32" Nullable="false" />
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="offering_code" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Section" Relationship="Self.FK_PR_STDPR" FromRole="StudentSection" ToRole="Section" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_STD_STDPR" FromRole="StudentSection" ToRole="Student" />
+          <Property Name="grade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_COURSE_CODE">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="course_code" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="course_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROF_ID">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="instructor_id" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="instructor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STUD_PR">
+          <End Role="Program" Type="Self.Program" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program">
+              <PropertyRef Name="program_id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PR_STDPR">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="StudentSection" Type="Self.StudentSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="offering_code" />
+            </Principal>
+            <Dependent Role="StudentSection">
+              <PropertyRef Name="offering_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STD_STDPR">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentSection" Type="Self.StudentSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="StudentSection">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="section27Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Instructors" EntityType="Self.Instructor" />
+          <EntitySet Name="Programs" EntityType="Self.Program" />
+          <EntitySet Name="Sections" EntityType="Self.Section" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="StudentSections" EntityType="Self.StudentSection" />
+          <AssociationSet Name="FK_COURSE_CODE" Association="Self.FK_COURSE_CODE">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Section" EntitySet="Sections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROF_ID" Association="Self.FK_PROF_ID">
+            <End Role="Instructor" EntitySet="Instructors" />
+            <End Role="Section" EntitySet="Sections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STUD_PR" Association="Self.FK_STUD_PR">
+            <End Role="Program" EntitySet="Programs" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PR_STDPR" Association="Self.FK_PR_STDPR">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="StudentSection" EntitySet="StudentSections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STD_STDPR" Association="Self.FK_STD_STDPR">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentSection" EntitySet="StudentSections" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="section27ModelStoreContainer" CdmEntityContainer="section27Entities">
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="section27Model.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="course_code" ColumnName="course_code" />
+                <ScalarProperty Name="course_name" ColumnName="course_name" />
+                <ScalarProperty Name="prereq" ColumnName="prereq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Instructors">
+            <EntityTypeMapping TypeName="section27Model.Instructor">
+              <MappingFragment StoreEntitySet="Instructor">
+                <ScalarProperty Name="instructor_id" ColumnName="instructor_id" />
+                <ScalarProperty Name="instructor_name" ColumnName="instructor_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Programs">
+            <EntityTypeMapping TypeName="section27Model.Program">
+              <MappingFragment StoreEntitySet="Program">
+                <ScalarProperty Name="program_id" ColumnName="program_id" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="section27Model.Section">
+              <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="offering_code" ColumnName="offering_code" />
+                <ScalarProperty Name="course_code" ColumnName="course_code" />
+                <ScalarProperty Name="semester" ColumnName="semester" />
+                <ScalarProperty Name="instructor_id" ColumnName="instructor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="section27Model.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="student_name" ColumnName="student_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number_home" ColumnName="phone_number_home" />
+                <ScalarProperty Name="phone_number_cell" ColumnName="phone_number_cell" />
+                <ScalarProperty Name="program_id" ColumnName="program_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentSections">
+            <EntityTypeMapping TypeName="section27Model.StudentSection">
+              <MappingFragment StoreEntitySet="StudentSection">
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="registry_id" ColumnName="registry_id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="offering_code" ColumnName="offering_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

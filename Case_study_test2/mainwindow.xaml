@@ -1,0 +1,27 @@
+﻿<Window x:Class="Case_study_test2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Case_study_test2"
+        mc:Ignorable="d"
+        Title="Student Dashboard" Height="700" Width="1400">
+    <ScrollViewer>
+        <Grid Height="700" Width="1400">
+            <!--<Button x:Name="btnFind_Student" Content="Find Student" Canvas.Left="35" Canvas.Top="35" FontSize="15" FontWeight="Bold" Click="btnFind_Student_Click" Margin="1211,98,61,493" />-->
+            <Label Content="Student Dashboard" Canvas.Left="460" Canvas.Top="192" FontSize="30" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,24,0,0" Height="54" Width="298"/>
+            <DataGrid x:Name="grid_Student" RowHeight="40" FontSize="25" Height="99" Width="804" Canvas.Left="32" Canvas.Top="35" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,87,0,0"/>
+            <DataGrid x:Name="grid_CurrentCourses" MouseDoubleClick="grid_DropCourse_DoubleClick" RowHeight="40" FontSize="20" Height="136" Width="804" Canvas.Left="32" Canvas.Top="35" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,266,0,0"/>
+            <DataGrid x:Name="grid_AcademicHistory" RowHeight="40" FontSize="20" Height="133" Width="804" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,541,0,0"/>
+
+            <Label Content="Double click to select a course to be dropped" FontSize="18" Margin="510,407,516,243"/>
+
+            <Button x:Name="btn_EditProfile" Content="Edit Profile" FontSize="20" FontWeight="Regular" Click="btn_EditProfile_Click" Margin="928,107,321,527" />
+            <Button x:Name="btn_AddCourses" Content="Add Courses" FontSize="20" FontWeight="Regular" Click="btn_AddCourses_Click" Margin="75,429,1174,223" />
+            <Button x:Name="btn_DropCourses" Content="Drop Selected Course" FontSize="20" FontWeight="Regular" Click="btn_DropCourse_Click" Margin="928,293,244,342" />
+            <Button x:Name="btn_Refresh" Content="Refresh" FontSize="20" FontWeight="Regular" Click="MainWindow_Loaded" Margin="1203,24,46,602" />
+            <Label Content="Current Courses" FontSize="30" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,212,0,0" Height="54" Width="298"/>
+            <Label Content="Academic History" FontSize="30" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,482,0,0" Height="54" Width="298"/>
+        </Grid>
+    </ScrollViewer>
+</Window>

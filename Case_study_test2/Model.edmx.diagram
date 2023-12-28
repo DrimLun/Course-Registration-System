@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1ada9c589a8843a3a8fadba91032b951" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="section27Model.Course" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="section27Model.Instructor" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="section27Model.Program" Width="1.5" PointX="10.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="section27Model.Section" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="section27Model.Student" Width="1.5" PointX="8.375" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="section27Model.StudentSection" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="section27Model.FK_COURSE_CODE" ManuallyRouted="false" />
+        <AssociationConnector Association="section27Model.FK_PROF_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="section27Model.FK_STUD_PR" ManuallyRouted="false" />
+        <AssociationConnector Association="section27Model.FK_PR_STDPR" ManuallyRouted="false" />
+        <AssociationConnector Association="section27Model.FK_STD_STDPR" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

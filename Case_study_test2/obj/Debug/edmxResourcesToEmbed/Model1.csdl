@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="section27Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="course_code" />
+    </Key>
+    <Property Name="course_code" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="course_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="prereq" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Sections" Relationship="Self.FK_COURSE_CODE" FromRole="Course" ToRole="Section" />
+  </EntityType>
+  <EntityType Name="Instructor">
+    <Key>
+      <PropertyRef Name="instructor_id" />
+    </Key>
+    <Property Name="instructor_id" Type="Int32" Nullable="false" />
+    <Property Name="instructor_name" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="319" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="319" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Sections" Relationship="Self.FK_PROF_ID" FromRole="Instructor" ToRole="Section" />
+  </EntityType>
+  <EntityType Name="Program">
+    <Key>
+      <PropertyRef Name="program_id" />
+    </Key>
+    <Property Name="program_id" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="program_name" Type="String" MaxLength="319" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_STUD_PR" FromRole="Program" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Section">
+    <Key>
+      <PropertyRef Name="offering_code" />
+    </Key>
+    <Property Name="offering_code" Type="Int32" Nullable="false" />
+    <Property Name="course_code" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="semester" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+    <Property Name="instructor_id" Type="Int32" />
+    <NavigationProperty Name="Course" Relationship="Self.FK_COURSE_CODE" FromRole="Section" ToRole="Course" />
+    <NavigationProperty Name="Instructor" Relationship="Self.FK_PROF_ID" FromRole="Section" ToRole="Instructor" />
+    <NavigationProperty Name="Students" Relationship="Self.StudentSection" FromRole="Section" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="student_id" />
+    </Key>
+    <Property Name="student_id" Type="Int32" Nullable="false" />
+    <Property Name="student_name" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="319" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="phone_number_home" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+    <Property Name="phone_number_cell" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+    <Property Name="program_id" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Program" Relationship="Self.FK_STUD_PR" FromRole="Student" ToRole="Program" />
+    <NavigationProperty Name="Sections" Relationship="Self.StudentSection" FromRole="Student" ToRole="Section" />
+  </EntityType>
+  <Association Name="FK_COURSE_CODE">
+    <End Role="Course" Type="Self.Course" Multiplicity="1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="course_code" />
+      </Principal>
+      <Dependent Role="Section">
+        <PropertyRef Name="course_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROF_ID">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+    <End Role="Section" Type="Self.Section" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="instructor_id" />
+      </Principal>
+      <Dependent Role="Section">
+        <PropertyRef Name="instructor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STUD_PR">
+    <End Role="Program" Type="Self.Program" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="program_id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="program_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StudentSection">
+    <End Role="Section" Type="Self.Section" Multiplicity="*" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="section27Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Courses" EntityType="Self.Course" />
+    <EntitySet Name="Instructors" EntityType="Self.Instructor" />
+    <EntitySet Name="Programs" EntityType="Self.Program" />
+    <EntitySet Name="Sections" EntityType="Self.Section" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <AssociationSet Name="FK_COURSE_CODE" Association="Self.FK_COURSE_CODE">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Section" EntitySet="Sections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROF_ID" Association="Self.FK_PROF_ID">
+      <End Role="Instructor" EntitySet="Instructors" />
+      <End Role="Section" EntitySet="Sections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STUD_PR" Association="Self.FK_STUD_PR">
+      <End Role="Program" EntitySet="Programs" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="StudentSection" Association="Self.StudentSection">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
